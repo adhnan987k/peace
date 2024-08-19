@@ -1,0 +1,44 @@
+import random
+
+# Define the game board
+board = [
+    ["R", "G", "B", "Y", "P", "O"],
+    ["Y", "P", "O", "R", "G", "B"],
+    ["B", "Y", "P", "O", "R", "G"],
+    ["G", "B", "Y", "P", "O", "R"],
+    ["O", "R", "G", "B", "Y", "P"],
+    ["P", "O", "R", "G", "B", "Y"]
+]
+
+# Define the score and moves
+score = 0
+moves = 10
+
+# Game loop
+while moves > 0:
+    # Print the board
+    for row in board:
+        print(" ".join(row))
+
+    # Ask the user for their move
+    x1, y1, x2, y2 = map(int, input("Enter your move (x1 y1 x2 y2): ").split())
+
+    # Check if the move is valid
+    if board[x1][y1] == board[x2][y2]:
+        # Swap the candies
+        board[x1][y1], board[x2][y2] = board[x2][y2], board[x1][y1]
+
+        # Check for matches
+        for i in range(6):
+            for j in range(6):
+                if j < 4 and board[i][j] == board[i][j+1] == board[i][j+2]:
+                    score += 3
+                    board[i][j] = board[i][j+1] = board[i][j+2] = " "
+                if i < 4 and board[i][j] == board[i+1][j] == board[i+2][j]:
+                    score += 3
+                    board[i][j] = board[i+1][j] = board[i+2][j] = " "
+
+    # Decrement the moves
+    moves -= 1
+
+print("Game over! Your score is:", score)
